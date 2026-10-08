@@ -1,10 +1,10 @@
 {
   "manifest_version": 3,
-  "name": "KiloProxyExt",
-  "version": "1.0",
-  "description": "Manual proxy switcher. Paste host:port:user:pass, Connect/Disconnect. No server needed.",
-  "permissions": ["proxy", "webRequest", "webRequestAuthProvider", "storage"],
+  "name": "KiloProxy",
+  "version": "2.0.0",
+  "description": "Save proxies, switch with one click. No server, no tracking.",
+  "permissions": ["proxy", "storage", "webRequest", "webRequestAuthProvider"],
   "host_permissions": ["<all_urls>"],
-  "background": { "service_worker": "background.js" },
-  "action": { "default_title": "KiloProxyExt", "default_popup": "popup.html" }
+  "background": { "service_worker": "src/background.js", "type": "module" },
+  "action": { "default_title": "KiloProxy", "default_popup": "src/popup/popup.html" }
 }
