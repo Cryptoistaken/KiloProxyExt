@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+body { width: 280px; font: 13px system-ui, sans-serif; margin: 0; padding: 12px; }
+.row { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.dot { width: 12px; height: 12px; border-radius: 50%; background: #999; flex: none; }
+.dot.on { background: #1a7f37; } .dot.off { background: #666; } .dot.err { background: #d33; }
+#status { font-weight: 600; }
+#sub { color: #555; font-size: 12px; margin: -6px 0 10px 20px; }
+label { display: block; font-size: 12px; color: #333; margin: 6px 0 2px; }
+input { width: 100%; box-sizing: border-box; padding: 5px 6px; font-size: 13px; }
+.grid2 { display: grid; grid-template-columns: 1fr 90px; gap: 6px; }
+.btns { display: flex; gap: 8px; margin-top: 10px; }
+button { flex: 1; padding: 7px; font-size: 13px; cursor: pointer; }
+#conn { background: #1a7f37; color: #fff; border: 0; }
+#dis { background: #eee; border: 1px solid #ccc; }
+button:disabled { opacity: .5; cursor: default; }
+#err { color: #d33; font-size: 12px; min-height: 16px; margin-top: 6px; white-space: pre-wrap; }
+</style>
+</head>
+<body>
+<div class="row"><span id="dot" class="dot"></span><span id="status">Checking…</span></div>
+<div id="sub"></div>
+<label>Paste full string</label><input id="quick" placeholder="host:port:user:pass" autocomplete="off" spellcheck="false">
+<div id="parsed" style="font-size:12px;color:#1a7f37;min-height:16px;margin-top:2px;"></div>
+<label>Host</label><input id="host" placeholder="gw.proxyrise.com">
+<div class="grid2">
+<div><label>Port</label><input id="port" type="number" placeholder="443"></div>
+<div><label>User</label><input id="user" placeholder="res-cm"></div>
+</div>
+<label>Pass</label><input id="pass" type="password" placeholder="proxy password">
+<div class="btns">
+<button id="conn">Connect</button>
+<button id="dis">Disconnect</button>
+</div>
+<div id="err"></div>
+<script src="popup.js"></script>
+</body>
+</html>

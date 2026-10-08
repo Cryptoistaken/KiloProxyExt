@@ -1,0 +1,10 @@
+{
+  "manifest_version": 3,
+  "name": "KiloProxyExt",
+  "version": "1.0",
+  "description": "Manual proxy switcher. Paste host:port:user:pass, Connect/Disconnect. No server needed.",
+  "permissions": ["proxy", "webRequest", "webRequestAuthProvider", "storage"],
+  "host_permissions": ["<all_urls>"],
+  "background": { "service_worker": "background.js" },
+  "action": { "default_title": "KiloProxyExt", "default_popup": "popup.html" }
+}
