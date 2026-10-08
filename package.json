@@ -1,0 +1,9 @@
+{
+  "name": "kiloproxy",
+  "private": true,
+  "type": "module",
+  "description": "KiloProxy: one-click proxy switcher for Chrome (Manifest V3).",
+  "scripts": {
+    "test": "node --test"
+  }
+}

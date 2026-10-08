@@ -1,29 +1,49 @@
 # KiloProxy
 
-A small Chrome (Manifest V3) extension for saving proxies and switching between them with one click. No server, no analytics; everything stays in `chrome.storage.local`.
+One-click proxy switcher for Chrome (Manifest V3). Save your proxies, tap one to connect, tap power to go direct. No server, no analytics. Everything stays in `chrome.storage.local`.
+
+![KiloProxy: live, fault and editor states](docs/preview.png)
 
 ## Install
 
 1. Open `chrome://extensions` and enable **Developer mode**.
-2. **Load unpacked** and select this folder.
+2. **Load unpacked** and pick this folder.
 
 ## Use
 
-- **Add:** paste `host:port:user:pass` (or `user:pass@host:port`, `host:port`) and the fields fill in. Save it.
-- **Connect:** click a saved proxy. The toolbar badge shows `ON`.
-- **Disconnect:** click **Go direct**.
-- **Edit / delete:** use the ✎ and ✕ buttons on a row.
+- **Add:** hit **Add** and paste `host:port:user:pass` (also `user:pass@host:port`, `host:port`, IPv6, `http://…`). The fields fill themselves. Name it if you like, then save.
+- **Connect:** tap a saved proxy. Tap the **power** button to go direct, or to reconnect the last one used.
+- **Edit / delete:** the pencil and bin on each row. Delete asks for a second tap.
+- **Status:** the toolbar icon lights up and shows `ON`, or `!` when something is wrong. The popup says what: a refused login, or another extension taking over your proxy settings.
+- Closing the popup mid-edit loses nothing; the form is restored next time.
 
-Switching logins on the same host drops to direct first, so the new login re-authenticates instead of reusing old sockets. Local addresses bypass the proxy.
+## How it works
+
+- Proxy logins are answered by a synchronous, blocking `webRequest.onAuthRequired` listener. Async variants never answer proxy auth in MV3. Credentials are held in memory only and re-armed from storage whenever the worker starts.
+- Switching profiles drops to direct for a moment first, so a new login on the same `host:port` re-authenticates instead of reusing the old login's sockets.
+- On startup the worker checks Chrome's real proxy setting against the saved state and quietly re-applies it if Chrome dropped it (no direct gap).
+- Only HTTP/HTTPS proxies are offered: Chrome can't answer authentication for SOCKS. Local addresses bypass the proxy.
 
 ## Layout
 
 ```
 manifest.json
-src/background.js     proxy apply + auth + badge
-src/lib/parse.js      proxy string parser
-src/lib/store.js      storage helpers
-src/popup/            popup UI (html, css, js)
+icons/                  logo.svg + on/off toolbar PNGs
+src/
+  background/           index (controller) · auth · proxy · toolbar
+  popup/                index.html · styles.css · main · home · editor · status · dom
+  shared/               parse · profile · store · messages
+test/                   unit tests (node:test)
+tools/                  e2e harness (real Chromium + 407 proxy) · icon generator
+tasklist.md             status, gotchas and next steps for the next session
 ```
 
-Note: Chrome can't answer authentication for SOCKS proxies, so only HTTP/HTTPS are offered.
+## Develop
+
+```sh
+npm test                      # unit tests, no dependencies
+node tools/e2e/flow.mjs       # full UI + auth + restart run; needs playwright-core + Chromium
+npm i --no-save sharp && node tools/make-icons.mjs   # regenerate icons/
+```
+
+See `tasklist.md` for the e2e environment variables and the gotchas worth knowing before changing anything.
