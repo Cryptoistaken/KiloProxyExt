@@ -580,3 +580,7 @@ body[data-state="fault"] .orb::before { border-color: rgb(var(--accent-rgb) / 0.
 
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-thumb { border-radius: 3px; background: var(--line-hi); }
+
+.proto-row { display: grid; grid-template-columns: 1fr 76px; gap: 10px; }
+.cc { display: grid; gap: 6px; align-content: start; min-width: 0; }
+.input--cc { text-align: center; text-transform: lowercase; }

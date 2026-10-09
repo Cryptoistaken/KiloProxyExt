@@ -27,3 +27,26 @@ export const addressOf = (p) => `${p.host.includes(":") ? `[${p.host}]` : p.host
 /** Stable key for matching an auth challenge to a profile. */
 export const endpointKey = (host, port) =>
   `${host.replace(/^\[|\]$/g, "").toLowerCase()}:${port}`;
+
+/** ISO country targeted by a Proxyrise-style username (res-cc, country-cc), or null. */
+export const countryOf = (user) => {
+  const m = /(?:^|-)res-([a-z]{2})(?:-|$)|country-([a-z]{2})/i.exec(String(user ?? ""));
+  return (m && (m[1] || m[2]) || "").toLowerCase() || null;
+};
+
+export const isCountry = (cc) => /^[a-z]{2}$/i.test(String(cc ?? ""));
+
+/**
+ * Rewrite user to target country cc, preserving any suffix
+ * (res-bd-sess-abc -> res-us-sess-abc). Empty user becomes res-cc.
+ * Returns null when there is no recognised country slot or cc is bad.
+ */
+export const switchCountry = (user, cc) => {
+  cc = String(cc ?? "").toLowerCase();
+  if (!isCountry(cc)) return null;
+  const text = String(user ?? "");
+  if (!text) return "res-" + cc;
+  if (/^res-[a-z]{2}(?![a-z])/i.test(text)) return text.replace(/^res-[a-z]{2}/i, "res-" + cc);
+  if (/country-[a-z]{2}/i.test(text)) return text.replace(/country-[a-z]{2}/i, "country-" + cc);
+  return null;
+};

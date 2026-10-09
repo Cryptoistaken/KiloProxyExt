@@ -11,7 +11,8 @@ One-click proxy switcher for Chrome (Manifest V3). Save your proxies, tap one to
 
 ## Use
 
-- **Add:** hit **Add** and paste `host:port:user:pass` (also `user:pass@host:port`, `host:port`, IPv6, `http://…`). The fields fill themselves. Name it if you like, then save.
+- **Add:** hit **Add** and paste 
+- **Country:** the 2-letter box next to Protocol rewrites a  username in place ( → ), keeping any session suffix. Same password works for every country.`host:port:user:pass` (also `user:pass@host:port`, `host:port`, IPv6, `http://…`). The fields fill themselves. Name it if you like, then save.
 - **Connect:** tap a saved proxy. Tap the **power** button to go direct, or to reconnect the last one used.
 - **Edit / delete:** the pencil and bin on each row. Delete asks for a second tap.
 - **Status:** the toolbar icon lights up and shows `ON`, or `!` when something is wrong. The popup says what: a refused login, or another extension taking over your proxy settings.

@@ -114,11 +114,17 @@
 
     <fieldset class="field">
       <legend class="field__label">Protocol</legend>
-      <div class="segmented">
-        <input type="radio" name="scheme" id="scheme-http" value="http" checked>
-        <label for="scheme-http">HTTP</label>
-        <input type="radio" name="scheme" id="scheme-https" value="https">
-        <label for="scheme-https">HTTPS</label>
+      <div class="proto-row">
+        <div class="segmented">
+          <input type="radio" name="scheme" id="scheme-http" value="http" checked>
+          <label for="scheme-http">HTTP</label>
+          <input type="radio" name="scheme" id="scheme-https" value="https">
+          <label for="scheme-https">HTTPS</label>
+        </div>
+        <label class="cc">
+          <span class="field__label">Country</span>
+          <input class="input input--cc" name="country" placeholder="bd" maxlength="2" autocapitalize="off" spellcheck="false" aria-label="Country (ISO)" title="ISO country, rewrites res-xx user">
+        </label>
       </div>
     </fieldset>
 

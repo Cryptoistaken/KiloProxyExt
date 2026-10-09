@@ -1,6 +1,6 @@
 import { Message, request } from "../shared/messages.js";
 import { parseProxy } from "../shared/parse.js";
-import { addressOf, parsePort } from "../shared/profile.js";
+import { addressOf, countryOf, parsePort, switchCountry } from "../shared/profile.js";
 import { save } from "../shared/store.js";
 import { $, icon } from "./dom.js";
 
@@ -11,7 +11,7 @@ const reveal = $("#reveal");
 
 /** @type {import("../shared/store.js").Draft} */
 const BLANK = Object.freeze({
-  editing: null, paste: "", name: "", scheme: "http", host: "", port: "", user: "", pass: "",
+  editing: null, paste: "", name: "", scheme: "http", host: "", port: "", user: "", pass: "", country: "",
 });
 
 /** The profile being edited, or null when adding a new one. */
@@ -21,12 +21,14 @@ let editing = null;
 export const fromProfile = (p) => ({
   editing: p.id, paste: "", name: p.name, scheme: p.scheme,
   host: p.host, port: String(p.port), user: p.user, pass: p.pass,
+  country: countryOf(p.user) ?? "",
 });
 
 export function init(app) {
   // Mirror every keystroke so closing the popup never loses what was typed.
   form.addEventListener("input", () => save({ draft: read() }));
   fields.paste.addEventListener("input", () => onPaste());
+  fields.country.addEventListener("input", () => onCountry());
 
   form.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -40,6 +42,7 @@ export function init(app) {
 
 /** Show the editor, pre-filled with `draft` (blank by default). */
 export function open(app, draft = BLANK) {
+  draft = { ...draft, country: countryOf(draft.user) ?? draft.country ?? "" };
   editing = draft.editing;
   write(draft);
   showHint(draft.paste);
@@ -66,6 +69,7 @@ function read() {
     port: fields.port.value,
     user: fields.user.value,
     pass: fields.pass.value,
+    country: fields.country.value,
   };
 }
 
@@ -77,8 +81,18 @@ function write(draft) {
 
 function onPaste() {
   const parsed = parseProxy(fields.paste.value);
-  if (parsed) write({ ...parsed, port: String(parsed.port) });
+  if (parsed) {
+    write({ ...parsed, port: String(parsed.port) });
+    fields.country.value = countryOf(parsed.user) ?? "";
+  }
   showHint(fields.paste.value);
+}
+
+function onCountry() {
+  const cc = fields.country.value.trim().toLowerCase();
+  if (!/^[a-z]{2}$/.test(cc)) return;
+  const next = switchCountry(fields.user.value, cc);
+  if (next !== null && next !== fields.user.value) fields.user.value = next;
 }
 
 function showHint(text) {
