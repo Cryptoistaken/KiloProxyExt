@@ -22,6 +22,9 @@
  * @property {string|null} lastId    Most recently connected profile (what the power button reconnects).
  * @property {number|null} since     Epoch ms when the current connection started.
  * @property {string|null} fault     Human-readable problem with the current connection.
+ * @property {string|null} directIp  IP seen without the proxy (measured at connect).
+ * @property {string|null} exitIp    Verified proxy exit IP, or null when unverified.
+ * @property {number|null} verifiedAt Epoch ms of the last verification.
  * @property {Draft|null} draft
  */
 
@@ -32,6 +35,9 @@ export const DEFAULTS = Object.freeze({
   lastId: null,
   since: null,
   fault: null,
+  directIp: null,
+  exitIp: null,
+  verifiedAt: null,
   draft: null,
 });
 

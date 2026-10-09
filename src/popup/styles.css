@@ -144,7 +144,8 @@ body[data-state="busy"] .bar__logo { filter: none; }
 /* ── Views ──────────────────────────────────────────────── */
 .view { display: none; }
 body[data-view="home"] #home,
-body[data-view="editor"] #editor {
+body[data-view="editor"] #editor,
+body[data-view="logs"] #logs {
   display: block;
   animation: rise 0.22s var(--ease) both;
 }
@@ -584,3 +585,12 @@ body[data-state="fault"] .orb::before { border-color: rgb(var(--accent-rgb) / 0.
 .proto-row { display: grid; grid-template-columns: 1fr 76px; gap: 10px; }
 .cc { display: grid; gap: 6px; align-content: start; min-width: 0; }
 .input--cc { text-align: center; text-transform: lowercase; }
+
+/* ── Logs ─────────────────────────────────────────────── */
+#logs { padding: 14px 16px 0; }
+.logs__actions { display: flex; gap: 8px; margin: 4px 0 12px; }
+.list--logs { max-height: 178px; }
+.log-row { display: flex; align-items: baseline; gap: 8px; padding: 7px 10px; border: 1px solid var(--line); border-radius: 9px; background: var(--surface); font: 11px/1.4 var(--mono); }
+.log-row__time { color: var(--faint); }
+.log-row__host { flex: 1; overflow: hidden; color: var(--text); text-overflow: ellipsis; white-space: nowrap; }
+.log-row__status { color: var(--dim); }

@@ -55,6 +55,7 @@
         <button class="btn btn--ghost btn--sm" id="add" type="button">
           <svg class="icon"><use href="#i-plus"/></svg>Add
         </button>
+        <button class="btn btn--ghost btn--sm" id="logs-btn" type="button">Logs</button>
       </div>
       <ul class="list" id="list"></ul>
       <div class="empty" id="empty" hidden>
@@ -66,6 +67,27 @@
   </main>
 
   <!-- ── Editor ───────────────────────────────────────────── -->
+  <!-- Logs ─────────────────────────────────────────────── -->
+  <main class="view" id="logs">
+    <div class="editor__head">
+      <button class="icon-btn" id="logs-back" type="button" aria-label="Back" title="Back">
+        <svg class="icon"><use href="#i-back"/></svg>
+      </button>
+      <h2>Connection log</h2>
+    </div>
+    <dl class="readout">
+      <div><dt>Exit IP</dt><dd id="l-exit"></dd></div>
+      <div><dt>Direct IP</dt><dd id="l-direct"></dd></div>
+      <div><dt>Verified</dt><dd id="l-verified"></dd></div>
+    </dl>
+    <div class="logs__actions">
+      <button class="btn btn--ghost btn--sm" id="reverify" type="button">Re-check</button>
+      <button class="btn btn--ghost btn--sm" id="clear-logs" type="button">Clear</button>
+    </div>
+    <ul class="list list--logs" id="log-list"></ul>
+    <p class="empty" id="logs-empty">No proxied requests yet.</p>
+  </main>
+
   <form class="view" id="editor" autocomplete="off" novalidate>
     <div class="editor__head">
       <button class="icon-btn" id="back" type="button" aria-label="Back" title="Back">

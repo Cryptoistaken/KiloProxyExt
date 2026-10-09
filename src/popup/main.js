@@ -3,6 +3,7 @@ import { $ } from "./dom.js";
 import { describe } from "./status.js";
 import * as editor from "./editor.js";
 import * as home from "./home.js";
+import * as logs from "./logs.js";
 
 /**
  * State shared by the views. Only this module replaces `app.state`;
@@ -10,7 +11,7 @@ import * as home from "./home.js";
  */
 const app = {
   state: structuredClone(DEFAULTS),
-  view: "home", // "home" | "editor"
+  view: "home", // "home" | "editor" | "logs"
   busy: false,
   error: "",
   go,
@@ -50,6 +51,7 @@ function render() {
   $("#notice").textContent = app.error;
   $("#notice").hidden = !app.error;
   home.render(app, status);
+  if (app.view === "logs") logs.render(app);
 }
 
 async function boot() {
@@ -57,6 +59,7 @@ async function boot() {
   $("#version").textContent = `v${chrome.runtime.getManifest().version}`;
   home.init(app);
   editor.init(app);
+  logs.init(app);
 
   // The background worker (and the editor's draft) write to storage; mirror it.
   watch((patch) => {

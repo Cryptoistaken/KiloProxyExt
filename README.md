@@ -16,6 +16,8 @@ One-click proxy switcher for Chrome (Manifest V3). Save your proxies, tap one to
 - **Connect:** tap a saved proxy. Tap the **power** button to go direct, or to reconnect the last one used.
 - **Edit / delete:** the pencil and bin on each row. Delete asks for a second tap.
 - **Status:** the toolbar icon lights up and shows `ON`, or `!` when something is wrong. The popup says what: a refused login, or another extension taking over your proxy settings.
+- **Verify:** after connecting, the worker fetches your exit IP through the proxy and flags it when it matches your direct IP (bypass).
+- **Logs:** the Logs button shows the verified exit IP plus recent hostnames that went through the proxy (memory only, Clear wipes it).
 - Closing the popup mid-edit loses nothing; the form is restored next time.
 
 ## How it works
